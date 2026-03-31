@@ -116,20 +116,6 @@ See [docs/api.md](docs/api.md) for the full API reference.
 
 ---
 
-## Project status
-
-This project is under active development. Current state:
-
-- [x] Local API server with all 8 inference/tuning modes
-- [x] Example scripts for all modes
-- [ ] `pforge` CLI (in progress — Phase 4)
-- [ ] Local-first config and data directories (in progress — Phase 2)
-- [ ] Proper package structure (in progress — Phase 3)
-
-The server is fully functional today. The `pforge` CLI is the next major milestone.
-
----
-
 ## Documentation
 
 - [docs/architecture.md](docs/architecture.md) — how the pieces fit together
