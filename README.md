@@ -1,6 +1,6 @@
-# Programmable Reasoning
+# pforge
 
-A local-first toolkit for developers who want to inspect, steer, and lightly tune language models on their own GPU.
+A CLI for developers to inspect, steer, and fine-tune open models on their own GPU.
 
 Run it on any machine with a CUDA GPU. Point it at a model. Then probe it, constrain it, compare it against fine-tuned versions, and watch its reasoning form layer by layer.
 
