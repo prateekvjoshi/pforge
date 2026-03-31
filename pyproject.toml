@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pforge"
+version = "0.1.0"
+description = "Local-first toolkit for inspecting, steering, and fine-tuning language models"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.29.0",
+    "pydantic>=2.7.0",
+    "httpx>=0.27.0",
+    "requests>=2.31.0",
+    "python-dotenv>=1.0.0",
+]
+keywords = ["llm", "vllm", "lora", "fine-tuning", "reasoning", "inference"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+Homepage = "https://github.com/prateekvjoshi/pforge"
+Repository = "https://github.com/prateekvjoshi/pforge"
+
+[project.scripts]
+pforge = "pforge.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pforge*"]

@@ -1,0 +1,78 @@
+# =============================================================================
+# requirements.txt — explicit full dependency list for server deployments
+#
+# For most developers the recommended install path is:
+#   pip install pforge          # lightweight deps auto-installed
+#   pforge init --install-gpu-deps             # installs torch + vLLM + training
+#
+# Use this file when you need a fully explicit install (e.g. Docker, CI, or a
+# deployment script that controls the exact install order):
+#   pip install -r requirements.txt   (after torch + vLLM are already present)
+#
+# IMPORTANT — PyTorch and vLLM are NOT listed here and must be installed first
+# with the correct CUDA wheel index (pforge init handles this automatically):
+#   pip install torch --index-url https://download.pytorch.org/whl/cu121
+#   pip install vllm
+#
+# Do NOT add torch or vllm to this file — vLLM pins its own torch version and
+# installing from a plain index URL would overwrite the CUDA-specific wheel.
+#
+# Version pins are soft minimums (>=) rather than exact pins because:
+#   - vLLM pulls in its own transformers/tokenizers pins; letting pip resolve
+#     avoids conflicts.
+#   - bitsandbytes is CUDA-version-sensitive; exact pins only make sense once
+#     you know your CUDA version.
+# =============================================================================
+
+# ── Web framework ─────────────────────────────────────────────────────────────
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+pydantic>=2.7.0
+
+# ── Async HTTP (vLLM health probes, dynamic LoRA load calls) ─────────────────
+httpx>=0.27.0
+
+# ── HuggingFace ecosystem ─────────────────────────────────────────────────────
+# If vLLM pins a specific transformers version, let pip resolve the conflict.
+# These are safe lower bounds only.
+transformers>=4.45.0
+tokenizers>=0.19.0
+accelerate>=0.30.0
+
+# ── Fine-tuning ────────────────────────────────────────────────────────────────
+# PEFT: LoRA adapter training
+peft>=0.11.0
+
+# TRL: SFTTrainer + SFTConfig (requires trl>=0.8.6 for SFTConfig)
+trl>=0.8.6
+
+# Datasets: JSONL loading + .map() preprocessing
+datasets>=2.19.0
+
+# ── QLoRA quantization ────────────────────────────────────────────────────────
+# bitsandbytes provides NF4 4-bit quantization for QLoRA.
+# Must be >= 0.43.0 for bnb_4bit_use_double_quant + bf16 compute dtype.
+# NOTE: bitsandbytes >= 0.44.0 adds multi-backend support; 0.43.x is the
+#       most stable version for CUDA 12.x as of mid-2025.
+bitsandbytes>=0.43.0
+
+# ── Utilities ─────────────────────────────────────────────────────────────────
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# einops is required by several Qwen model files and attention variants
+einops>=0.7.0
+
+# scipy is used by some LR schedulers and evaluation utilities
+scipy>=1.11.0
+
+# ── Optional packages (uncomment if needed) ───────────────────────────────────
+
+# AutoAWQ: required to load/serve AWQ-quantized models with vLLM.
+# If MODEL_NAME points to an AWQ checkpoint, uncomment this.
+# autoawq>=0.2.5
+
+# Flash Attention 2: speeds up training and inference but requires a
+# long compile step.  Install manually after setup:
+#   pip install flash-attn --no-build-isolation
+# Do NOT add it here — the compile step is too slow for automated setup.
