@@ -474,6 +474,7 @@ def cmd_chat(args):
 
         print('Assistant: ', end='', flush=True)
         full_reply: list = []
+        in_thinking = False
 
         url = f"{_server_url(args)}/v1/chat/completions"
         try:
@@ -489,8 +490,17 @@ def cmd_chat(args):
                         try:
                             chunk = json.loads(chunk_str)
                             delta = chunk['choices'][0]['delta']
+                            thinking = delta.get('reasoning_content') or ''
                             content = delta.get('content') or ''
+                            if thinking:
+                                if not in_thinking:
+                                    print('\n<think>', flush=True)
+                                    in_thinking = True
+                                print(thinking, end='', flush=True)
                             if content:
+                                if in_thinking:
+                                    print('\n</think>\n', flush=True)
+                                    in_thinking = False
                                 print(content, end='', flush=True)
                                 full_reply.append(content)
                         except (KeyError, IndexError, json.JSONDecodeError):
