@@ -42,7 +42,7 @@ docs/                 Public developer documentation
 The codebase is being refactored from a RunPod-hosted backend to a local-first package. Phases:
 
 1. **Done** — repo reframing, docs structure
-2. **Done** — local filesystem/config (`backend/paths.py`, `PR_*` env vars, platform defaults)
+2. **Done** — local filesystem/config (`backend/paths.py`, `PFORGE_*` env vars, platform defaults)
 3. **Done** — package restructure: rename `backend/` → `pforge/`, split `orchestrator.py`
 4. **Done** — CLI: `pforge` implemented in `pforge/cli.py`, exposed via `pyproject.toml`
 5. **Done** — Server cleanup: rename `orchestrator.py` → `server.py`, remove hosting-specific language

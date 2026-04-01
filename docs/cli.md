@@ -215,7 +215,7 @@ The `pforge` CLI is the recommended interface. You can also call the example scr
 ```bash
 # Set server URL and API key
 export PFORGE_SERVER="http://localhost:8000"
-export PR_API_KEY="your-key"
+export PFORGE_API_KEY="your-key"
 
 python3 examples/chat.py
 python3 examples/think.py --prompt "Your prompt"

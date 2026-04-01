@@ -5,7 +5,7 @@
 Settings are resolved in this order (highest to lowest priority):
 
 1. CLI flags (e.g. `pforge serve --port 8080`)
-2. Environment variables (e.g. `PR_PORT=8080`)
+2. Environment variables (e.g. `PFORGE_PORT=8080`)
 3. Config file (`~/.config/pforge/config.toml`)
 4. Built-in defaults
 
@@ -49,49 +49,49 @@ data_dir = ""                 # default: ~/.local/share/pforge
 
 ## Environment variables
 
-All settings can be overridden with environment variables. The prefix is `PR_` for most settings.
+All settings can be overridden with environment variables. The prefix is `PFORGE_` for most settings.
 
 ### Model
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PR_MODEL` | `Qwen/Qwen3-1.7B` | Model name (HuggingFace ID or local path) |
-| `PR_DTYPE` | `bfloat16` | Model dtype: `bfloat16`, `float16`, `float32` |
-| `PR_QUANTIZATION` | *(empty)* | `awq` or `gptq` for quantized models |
+| `PFORGE_MODEL` | `Qwen/Qwen3-1.7B` | Model name (HuggingFace ID or local path) |
+| `PFORGE_DTYPE` | `bfloat16` | Model dtype: `bfloat16`, `float16`, `float32` |
+| `PFORGE_QUANTIZATION` | *(empty)* | `awq` or `gptq` for quantized models |
 | `HF_TOKEN` | *(empty)* | HuggingFace token for gated models |
 
 ### Server
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PR_HOST` | `127.0.0.1` | API server bind address |
-| `PR_PORT` | `8000` | API server port |
-| `PR_API_KEY` | *(empty)* | API key — leave empty to disable auth |
-| `PR_CORS_ORIGINS` | *(empty)* | Comma-separated allowed CORS origins |
+| `PFORGE_HOST` | `127.0.0.1` | API server bind address |
+| `PFORGE_PORT` | `8000` | API server port |
+| `PFORGE_API_KEY` | *(empty)* | API key — leave empty to disable auth |
+| `PFORGE_CORS_ORIGINS` | *(empty)* | Comma-separated allowed CORS origins |
 
 ### vLLM
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PR_VLLM_PORT` | `8002` | Internal vLLM port |
-| `PR_GPU_MEMORY_UTILIZATION` | `0.80` | Fraction of VRAM for vLLM |
-| `PR_MAX_MODEL_LEN` | `8192` | Max context length in tokens |
+| `PFORGE_VLLM_PORT` | `8002` | Internal vLLM port |
+| `PFORGE_GPU_MEMORY_UTILIZATION` | `0.80` | Fraction of VRAM for vLLM |
+| `PFORGE_MAX_MODEL_LEN` | `8192` | Max context length in tokens |
 
 ### Training
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PR_TRAIN_STOP_SERVER` | `true` | Stop vLLM during training to free VRAM |
+| `PFORGE_TRAIN_STOP_SERVER` | `true` | Stop vLLM during training to free VRAM |
 
 ### Paths
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PR_DATA_DIR` | `~/.local/share/pforge` | Root directory for all runtime data |
+| `PFORGE_DATA_DIR` | `~/.local/share/pforge` | Root directory for all runtime data |
 
 ### Legacy (still supported, will be deprecated)
 
-The following variables from the original server-oriented design still work but will be replaced by the `PR_*` prefix in a future version:
+The following variables from the original server-oriented design still work but will be replaced by the `PFORGE_*` prefix in a future version:
 
 `MODEL_NAME`, `ORCHESTRATOR_API_KEY`, `CORS_ALLOWED_ORIGINS`, `VLLM_PORT`, `GPU_MEMORY_UTILIZATION`, `MAX_MODEL_LEN`, `DTYPE`, `QUANTIZATION`, `TRAIN_STOP_VLLM`, `WORKSPACE_DIR`
 
@@ -109,13 +109,13 @@ By default, all runtime data is stored under `~/.local/share/pforge/`:
 | Server state | `<data_dir>/server_status.json` |
 | HuggingFace cache | Uses `HF_HOME` if set, otherwise HuggingFace default |
 
-Override the root with `PR_DATA_DIR`.
+Override the root with `PFORGE_DATA_DIR`.
 
 ---
 
 ## API key
 
-The API key is optional. If `PR_API_KEY` is set, all endpoints except `GET /health` require the `X-API-Key: <key>` header.
+The API key is optional. If `PFORGE_API_KEY` is set, all endpoints except `GET /health` require the `X-API-Key: <key>` header.
 
 Generate a strong key:
 ```bash
@@ -130,5 +130,5 @@ Heavy endpoints (`/train`, `/logit_lens`, `/restart_vllm`) are rate-limited to p
 
 | Variable | Default | Applies to |
 |----------|---------|------------|
-| `PR_RATE_LIMIT_HEAVY` | `5` req/min | train, logit_lens, restart_vllm |
-| `PR_RATE_LIMIT_OPS` | `10` req/min | load_lora |
+| `PFORGE_RATE_LIMIT_HEAVY` | `5` req/min | train, logit_lens, restart_vllm |
+| `PFORGE_RATE_LIMIT_OPS` | `10` req/min | load_lora |

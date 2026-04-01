@@ -29,7 +29,7 @@ def _api_key(args) -> str:
     return (
         getattr(args, 'api_key', None)
         or os.environ.get('PFORGE_API_KEY')
-        or os.environ.get('PR_API_KEY')
+        or os.environ.get('PFORGE_API_KEY')
         or os.environ.get('API_KEY')           # backward-compat with examples/
         or os.environ.get('ORCHESTRATOR_API_KEY')
         or ''
@@ -273,15 +273,15 @@ def cmd_serve(args):
     """Start the API server and vLLM subprocess."""
     # Apply CLI overrides before config is read
     if args.model:
-        os.environ['PR_MODEL'] = args.model
+        os.environ['PFORGE_MODEL'] = args.model
     if args.port:
-        os.environ['PR_PORT'] = str(args.port)
+        os.environ['PFORGE_PORT'] = str(args.port)
     if args.host:
-        os.environ['PR_HOST'] = args.host
+        os.environ['PFORGE_HOST'] = args.host
     if args.gpu_memory_utilization is not None:
-        os.environ['PR_GPU_MEMORY_UTILIZATION'] = str(args.gpu_memory_utilization)
+        os.environ['PFORGE_GPU_MEMORY_UTILIZATION'] = str(args.gpu_memory_utilization)
     if args.set_api_key:
-        os.environ['PR_API_KEY'] = args.set_api_key
+        os.environ['PFORGE_API_KEY'] = args.set_api_key
 
     # Import config after env vars are set
     import importlib
@@ -297,7 +297,7 @@ def cmd_serve(args):
     if cfg.ORCHESTRATOR_API_KEY:
         print(f"  Auth   : enabled (X-API-Key required)")
     else:
-        print(f"  Auth   : disabled — set PR_API_KEY before exposing externally")
+        print(f"  Auth   : disabled — set PFORGE_API_KEY before exposing externally")
     print()
 
     uvicorn.run(
@@ -905,7 +905,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         '--api-key', dest='api_key', default=None, metavar='KEY',
-        help='API key ($PFORGE_API_KEY / $PR_API_KEY)',
+        help='API key ($PFORGE_API_KEY / $PFORGE_API_KEY)',
     )
     parser.add_argument('--version', action='version', version='pforge 0.1.0')
 

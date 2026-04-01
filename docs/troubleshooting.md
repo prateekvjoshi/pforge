@@ -16,7 +16,7 @@ tail -100 <data_dir>/logs/vllm.log
 - Try downloading manually: `huggingface-cli download Qwen/Qwen3-1.7B`
 
 **Out of memory**
-- Lower `PR_GPU_MEMORY_UTILIZATION` (e.g. `0.70`)
+- Lower `PFORGE_GPU_MEMORY_UTILIZATION` (e.g. `0.70`)
 - Try a smaller model
 - Kill other GPU processes: `nvidia-smi` to see what's running
 
@@ -75,7 +75,7 @@ curl http://localhost:8000/health
 
 ## API returns 401
 
-The server has `PR_API_KEY` set. Pass the key in your request:
+The server has `PFORGE_API_KEY` set. Pass the key in your request:
 
 ```bash
 curl -H "X-API-Key: your-key" http://localhost:8000/status

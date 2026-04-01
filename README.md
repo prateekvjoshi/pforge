@@ -91,7 +91,7 @@ All settings have local defaults. Override via environment variables or a config
 export MODEL_NAME="Qwen/Qwen3-1.7B"
 
 # Set data directory (default: ~/.local/share/pforge)
-export PR_DATA_DIR="~/my-models"
+export PFORGE_DATA_DIR="~/my-models"
 ```
 
 See [docs/configuration.md](docs/configuration.md) for the full reference.

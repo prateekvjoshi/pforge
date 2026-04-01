@@ -2,7 +2,7 @@
 paths.py — platform-appropriate local data directory resolution.
 
 Priority for data root:
-  1. PR_DATA_DIR env var
+  1. PFORGE_DATA_DIR env var
   2. Legacy WORKSPACE_DIR env var (backward compat)
   3. Platform default:
        Linux/other  — $XDG_DATA_HOME/pforge
@@ -29,5 +29,5 @@ def default_data_dir() -> Path:
 
 def resolve_data_dir() -> Path:
     """Return the active data directory, respecting env var overrides."""
-    explicit = os.environ.get("PR_DATA_DIR") or os.environ.get("WORKSPACE_DIR")
+    explicit = os.environ.get("PFORGE_DATA_DIR") or os.environ.get("WORKSPACE_DIR")
     return Path(explicit) if explicit else default_data_dir()
