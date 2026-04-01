@@ -764,7 +764,7 @@ _CYAN   = "\033[36m"
 
 def _prob_bar(prob: float, width: int = 12) -> str:
     filled = round(prob * width)
-    return "█" * filled + "░" * (width - filled)
+    return "#" * filled + "-" * (width - filled)
 
 
 def _token_color(token: str, prob: float, final_answer: str) -> str:
@@ -827,8 +827,8 @@ def cmd_logit_lens(args):
             print(f"  {label:<15}  {color}{bar}{_RESET}  {'  '.join(parts)}{marker}")
 
     # Heatmap summary
-    print(f"\n{_BOLD}Heatmap — top token confidence across all layers:{_RESET}")
-    print(f"  {'░' * 3} low  {'█' * 3} high    {_GREEN}green = final answer{_RESET}")
+    print(f"\n{_BOLD}Heatmap - top token confidence across all layers:{_RESET}")
+    print(f"  --- low  ### high    {_GREEN}green = final answer{_RESET}")
     print()
     for entry in layers:
         label = entry['label']
