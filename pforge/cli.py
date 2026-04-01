@@ -65,11 +65,11 @@ def _get(args, path: str) -> dict:
         _die(f"Server returned {e.response.status_code}: {e.response.text[:200]}")
 
 
-def _post(args, path: str, body: dict) -> dict:
+def _post(args, path: str, body: dict, timeout=60.0) -> dict:
     import httpx
     url = f"{_server_url(args)}{path}"
     try:
-        r = httpx.post(url, headers=_headers(args), json=body, timeout=60.0)
+        r = httpx.post(url, headers=_headers(args), json=body, timeout=timeout)
         r.raise_for_status()
         return r.json()
     except httpx.ConnectError:
@@ -762,7 +762,7 @@ def cmd_logit_lens(args):
 
     print("Running logit lens (stops vLLM briefly to free VRAM — ~1-2 min)…\n")
 
-    result = _post(args, '/logit_lens', body)
+    result = _post(args, '/logit_lens', body, timeout=None)
 
     layers = result.get('layers', [])
     final_answer = result.get('final_answer', '?')
