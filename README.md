@@ -1,8 +1,8 @@
 # pforge
 
-A CLI tool for developers to inspect, steer, and fine-tune open models on their own GPU.
+pforge is a CLI for serving and shaping open models on your own GPU.
 
-Run it on any machine with a CUDA GPU. Point it at a model. Then probe it, constrain it, compare it against fine-tuned versions, and watch its reasoning form layer by layer.
+Run it on any machine with a CUDA GPU. Point it at a model. Then peek into it, fine-tune it, constrain it, refine it using feedback, compare it against fine-tuned versions, and watch its reasoning form layer-by-layer.
 
 ---
 
@@ -13,7 +13,7 @@ Run it on any machine with a CUDA GPU. Point it at a model. Then probe it, const
 | `pforge chat` | Streaming chat with visible chain-of-thought |
 | `pforge think` | Same prompt at low / medium / high compute budgets — see how thinking time changes quality |
 | `pforge compare` | Two models answer the same prompt in parallel — base vs fine-tuned, side by side |
-| `pforge logit-lens` | Peek inside the model layer by layer as the answer crystallises |
+| `pforge logit-lens` | Peek inside the model layer by layer as the answer crystallizes |
 | `pforge debate` | Two model instances argue opposing sides over N rounds |
 | `pforge constrain` | Answer a prompt under explicit reasoning rules you define |
 | `pforge evolve` | Iterative refinement — give feedback, model improves its answer |
@@ -33,11 +33,7 @@ Tested on Linux with CUDA 12.1. macOS (CPU/MPS) is not currently supported.
 
 ## Installation
 
-```bash
-pip install pforge
-```
-
-Or from source:
+From source:
 
 ```bash
 git clone https://github.com/prateekvjoshi/pforge
