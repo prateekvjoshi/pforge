@@ -754,6 +754,27 @@ def cmd_train(args):
 # pforge logit-lens
 # ═════════════════════════════════════════════════════════════════════════════
 
+_RESET  = "\033[0m"
+_BOLD   = "\033[1m"
+_DIM    = "\033[2m"
+_GREEN  = "\033[32m"
+_YELLOW = "\033[33m"
+_CYAN   = "\033[36m"
+
+
+def _prob_bar(prob: float, width: int = 12) -> str:
+    filled = round(prob * width)
+    return "█" * filled + "░" * (width - filled)
+
+
+def _token_color(token: str, prob: float, final_answer: str) -> str:
+    if token.strip() == final_answer.strip():
+        return _GREEN
+    if prob >= 0.5:
+        return _YELLOW
+    return _RESET
+
+
 def cmd_logit_lens(args):
     """Peek inside the model layer by layer as the answer forms."""
     body = {'prompt': args.prompt, 'top_k': args.top_k}
@@ -769,18 +790,55 @@ def cmd_logit_lens(args):
     first_layer = result.get('answer_first_appears_at_layer')
     n_layers = result.get('num_layers', 0)
 
-    print(f"Prompt : {result.get('prompt', '')!r}")
-    print(f"Answer : {final_answer!r}  (first at layer {first_layer} of {n_layers})\n")
+    print(f"{_BOLD}Prompt{_RESET} : {result.get('prompt', '')!r}")
+    print(f"{_BOLD}Answer{_RESET} : {_GREEN}{final_answer!r}{_RESET}  "
+          f"(locks in at layer {first_layer} of {n_layers})\n")
 
+    if args.compact:
+        # Compact: one row per layer with bar + convergence marker
+        print(f"  {'Layer':<15}  {'Top token':<14}  {'Prob':>5}  Confidence")
+        print(f"  {'─'*15}  {'─'*14}  {'─'*5}  {'─'*12}")
+        for entry in layers:
+            label = entry['label']
+            top = (entry['top_predictions'] or [{}])[0]
+            token = top.get('token', '')
+            prob  = top.get('prob', 0.0)
+            color = _token_color(token, prob, final_answer)
+            bar   = _prob_bar(prob)
+            marker = f"  {_CYAN}◄ locks in{_RESET}" if label == first_layer else ''
+            print(f"  {label:<15}  {color}{token:<14}{_RESET}  {prob:>5.3f}  {color}{bar}{_RESET}{marker}")
+    else:
+        # Full: top-k tokens per layer, bar on top token, convergence marker
+        print(f"  {'Layer':<15}  Predictions")
+        print(f"  {'─'*15}  {'─'*55}")
+        for entry in layers:
+            label = entry['label']
+            preds = entry['top_predictions'][:args.top_k]
+            top   = preds[0] if preds else {}
+            top_token = top.get('token', '')
+            top_prob  = top.get('prob', 0.0)
+            bar   = _prob_bar(top_prob)
+            color = _token_color(top_token, top_prob, final_answer)
+            marker = f"  {_CYAN}◄ locks in{_RESET}" if label == first_layer else ''
+            parts = []
+            for p in preds:
+                c = _token_color(p['token'], p['prob'], final_answer)
+                parts.append(f"{c}{p['token']!r}{_RESET}:{p['prob']:.3f}")
+            print(f"  {label:<15}  {color}{bar}{_RESET}  {'  '.join(parts)}{marker}")
+
+    # Heatmap summary
+    print(f"\n{_BOLD}Heatmap — top token confidence across all layers:{_RESET}")
+    print(f"  {'░' * 3} low  {'█' * 3} high    {_GREEN}green = final answer{_RESET}")
+    print()
     for entry in layers:
         label = entry['label']
-        preds = entry['top_predictions'][:args.top_k]
-        if args.compact:
-            top = preds[0] if preds else {}
-            print(f"  {label:15s}  {top.get('token', ''):12s}  {top.get('prob', 0):.3f}")
-        else:
-            parts = [f"{p['token']!r}:{p['prob']:.3f}" for p in preds]
-            print(f"  {label:15s}  {'  '.join(parts)}")
+        top   = (entry['top_predictions'] or [{}])[0]
+        token = top.get('token', '')
+        prob  = top.get('prob', 0.0)
+        color = _token_color(token, prob, final_answer)
+        bar   = _prob_bar(prob, width=20)
+        marker = f" {_CYAN}◄{_RESET}" if label == first_layer else ''
+        print(f"  {label:<15}  {color}{bar}{_RESET}  {color}{token!r:<12}{_RESET}  {prob:.3f}{marker}")
 
 
 # ═════════════════════════════════════════════════════════════════════════════
