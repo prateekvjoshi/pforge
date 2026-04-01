@@ -490,7 +490,7 @@ def cmd_chat(args):
                         try:
                             chunk = json.loads(chunk_str)
                             delta = chunk['choices'][0]['delta']
-                            thinking = delta.get('reasoning_content') or ''
+                            thinking = delta.get('reasoning') or delta.get('reasoning_content') or ''
                             content = delta.get('content') or ''
                             if thinking:
                                 if not in_thinking:
