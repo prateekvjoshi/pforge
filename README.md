@@ -88,7 +88,7 @@ All settings have local defaults. Override via environment variables or a config
 
 ```bash
 # Set model
-export PR_MODEL="Qwen/Qwen3-1.7B"
+export MODEL_NAME="Qwen/Qwen3-1.7B"
 
 # Set data directory (default: ~/.local/share/pforge)
 export PR_DATA_DIR="~/my-models"
