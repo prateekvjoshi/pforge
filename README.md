@@ -1,6 +1,6 @@
 # pforge
 
-A CLI for developers to inspect, steer, and fine-tune open models on their own GPU.
+A CLI tool for developers to inspect, steer, and fine-tune open models on their own GPU.
 
 Run it on any machine with a CUDA GPU. Point it at a model. Then probe it, constrain it, compare it against fine-tuned versions, and watch its reasoning form layer by layer.
 
