@@ -19,7 +19,7 @@
 set -euo pipefail
 
 WORKSPACE="${WORKSPACE:-/workspace}"
-REPO_DIR="${REPO_DIR:-$(cd "$(dirname "$0")/.." && pwd)}"
+REPO_DIR="${REPO_DIR:-$(cd "$(dirname "$0")/../.." && pwd)}"
 VENV="$WORKSPACE/venv"
 
 echo "=============================================="
