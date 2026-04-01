@@ -166,7 +166,7 @@ async def lifespan(fastapi_app: FastAPI):  # noqa: ARG001
 
 
 app = FastAPI(
-    title="Programmable Reasoning",
+    title="pforge",
     description=(
         "Manages the vLLM inference subprocess and LoRA flash-tuning lifecycle."
     ),

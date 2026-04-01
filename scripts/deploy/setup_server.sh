@@ -23,7 +23,7 @@ REPO_DIR="${REPO_DIR:-$(cd "$(dirname "$0")/../.." && pwd)}"
 VENV="$WORKSPACE/venv"
 
 echo "=============================================="
-echo "  Programmable Reasoning — Server Setup"
+echo "  pforge — Server Setup"
 echo "  Workspace : $WORKSPACE"
 echo "  Repo      : $REPO_DIR"
 echo "  Venv      : $VENV"
@@ -62,7 +62,7 @@ echo "  OK"
 echo "[3/8] Writing $WORKSPACE/.env…"
 cat > "$WORKSPACE/.env" << ENVEOF
 # =============================================================================
-# Programmable Reasoning — runtime environment
+# pforge — runtime environment
 # Sourced automatically by: source /workspace/.env
 # =============================================================================
 
@@ -125,7 +125,7 @@ if [ ! -f "$WORKSPACE/.env.secrets" ]; then
   echo "[3b] Creating $WORKSPACE/.env.secrets (fill in your secrets here)…"
   cat > "$WORKSPACE/.env.secrets" << 'SECRETSEOF'
 # =============================================================================
-# Programmable Reasoning — secrets (never overwritten by setup_server.sh)
+# pforge — secrets (never overwritten by setup_server.sh)
 # =============================================================================
 
 # API key — generate with: python3 -c "import secrets; print(secrets.token_hex(32))"

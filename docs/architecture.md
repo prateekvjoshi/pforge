@@ -2,7 +2,7 @@
 
 ## Overview
 
-Programmable Reasoning runs as a local API server that manages a vLLM subprocess. The server exposes a REST API that the CLI (and any other HTTP client) talks to.
+pforge runs as a local API server that manages a vLLM subprocess. The server exposes a REST API that the CLI (and any other HTTP client) talks to.
 
 ```
 [CLI / HTTP client]

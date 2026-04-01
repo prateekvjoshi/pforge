@@ -1,4 +1,4 @@
-# Contributing to Programmable Reasoning
+# Contributing to pforge
 
 Thanks for your interest in contributing.
 

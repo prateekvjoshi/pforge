@@ -290,7 +290,7 @@ def cmd_serve(args):
 
     import uvicorn
 
-    print(f"Starting Programmable Reasoning")
+    print(f"Starting pforge")
     print(f"  Server : http://{cfg.ORCHESTRATOR_HOST}:{cfg.ORCHESTRATOR_PORT}")
     print(f"  Model  : {cfg.MODEL_NAME}")
     print(f"  Data   : {cfg.LOGS_DIR.parent}")
@@ -829,7 +829,7 @@ def cmd_adapters_load(args):
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog='pforge',
-        description='Programmable Reasoning — local LLM inference and fine-tuning',
+        description='pforge — local LLM inference and fine-tuning',
     )
     parser.add_argument(
         '--server', default=None, metavar='URL',

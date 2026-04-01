@@ -1,6 +1,6 @@
 # Training
 
-Programmable Reasoning supports lightweight LoRA fine-tuning via QLoRA (4-bit quantization). You can train a style or behavior adapter from as few as 5–20 examples.
+pforge supports lightweight LoRA fine-tuning via QLoRA (4-bit quantization). You can train a style or behavior adapter from as few as 5–20 examples.
 
 ---
 
